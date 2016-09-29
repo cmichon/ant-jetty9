@@ -1,0 +1,24 @@
+<project xmlns:ivy="antlib:org.apache.ivy.ant" name="" default="run">
+  <!--property file="proxy.properties"/>
+  <setproxy proxyhost="${proxyhost}" proxyport="${proxyport}" proxyuser="${proxyuser}" proxypassword="${proxypass}"/-->
+  <target name="ivy">
+    <ivy:retrieve/>
+    <mkdir dir="webapps"/>
+    <mkdir dir="work"/>
+  </target>
+  <target name="run" depends="ivy">
+    <java classname="org.eclipse.jetty.start.Main" classpath="lib/*" maxmemory="1G" fork="true">
+      <jvmarg value="-DSTOP.PORT=28282"/>
+      <jvmarg value="-DSTOP.KEY=123qwe"/>
+      <jvmarg value="-Djetty.base=."/>
+      <jvmarg value="-Djetty.home=."/>
+    </java>
+  </target>
+  <target name="clean">
+    <delete includeemptydirs="true" quiet="true">
+      <fileset dir="lib"/>
+      <fileset dir="webapps"/>
+      <fileset dir="work"/>
+    </delete>
+  </target>
+</project>
